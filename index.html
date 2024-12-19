@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HAPPY BIRTHDAY</title>
+
+  <!-- 全站 SMO -->
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/images/gift.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="HAPPY BIRTHDAY">
+  <meta property="og:title" content="HAPPY BIRTHDAY">
+  <meta property="og:description" content="HAPPY BIRTHDAY">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
+  <link rel="manifest" href="./images/favicon/site.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Oleo+Script:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      width: 100%;
+      height: 100dvh;
+      font-family: "Oleo Script", "Noto Sans TC", serif;
+      background-color: #fff7d2;
+      color: #3b3b3a;
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .wrap {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wrap__content {
+      max-width: 500px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .wrap__content__title {
+      font-size: 48px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .wrap__content__gift {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      transform: translateX(-4%);
+    }
+
+    .wrap__content__gift > * {
+      object-fit: contain;
+    }
+
+    .gift__img {
+      width: 50%;
+      height: auto;
+    }
+
+    .c-btn {
+      font-size: 18px; 
+      color: #fff7d2;
+      border-radius: 50px;
+      letter-spacing: 1.2px;
+      padding: 6px 12px;
+      transition: all ease 300ms;
+    }
+
+    .c-btn--main {
+      background-color: #42B4A5;
+      box-shadow: 0 3px 0px #3e8178;
+    }
+
+    .c-btn--dark {
+      background-color: #5e5e5e;
+      box-shadow: 0 3px 0px #3b3b3a;
+    }
+
+    .gift__btn {
+      animation: float 800ms ease infinite alternate;
+    }
+
+    .c-btn:hover {
+      transition: all ease 300ms;
+    }
+
+    .c-btn--main:hover {
+      background-color: #389c8f;
+    }
+
+    .c-btn--dark:hover {
+      background-color: #484848;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(10%);
+      }
+    }
+
+    .modal {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #3b3a3ac9;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all ease 300ms;
+    }
+
+    .modal.is-active {
+      opacity: 1;
+      visibility: visible;
+      transition: all ease 300ms;
+    }
+
+    .modal__wrap {
+      max-width: 560px;
+      width: 100%;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      border-radius: 20px;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .modal__wrap__title {
+      font-size: 20px;
+      letter-spacing: 1.5px;
+    }
+
+    .modal__wrap__btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .modal__wrap__btn > * {
+      padding: 6px 16px;
+    }
+
+    .result {
+      width: 100%;
+      height: 100%;
+      background-color: #fff7d2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      text-align: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all ease 300ms;
+    }
+
+    .result.is-active {
+      opacity: 1;
+      visibility: visible;
+      transition: all ease 300ms;
+    }
+
+    .result img {
+      width: 50%;
+      object-fit: contain;
+    }
+
+    .result__title {
+      position: relative;
+      font-size: 26px;
+      color: #42B4A5;
+      font-weight: 600;
+      letter-spacing: 2.2px;
+      /* border-bottom: 1px solid #42b4a580; */
+      /* border-top: 1px solid #42b4a580; */
+      margin-bottom: 8px;
+    }
+
+    .result__title::after {
+      content: ""; 
+      width: 20px;
+      height: 1px; 
+      background-color: #42b4a5ac;
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .result__subtitle {
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+    }
+
+    .result__text {
+      font-size: 18px;
+      letter-spacing: 1.2px;
+      color: #5e5e5e;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="wrap__content">
+      <h1 class="wrap__content__title">HAPPY<br>BIRTHDAY</h1>
+      <div class="wrap__content__gift">
+        <img class="gift__img" src="./images/gift.png" alt="">
+      </div>
+      <button typpe="button" class="gift__btn c-btn c-btn--main">click me</button>
+    </div>
+  </div>
+
+  <div class="modal">
+    <div class="modal__wrap">
+      <h2 class="modal__wrap__title">請選擇形容詞</h2>
+      <div class="modal__wrap__btn">
+        <button type="button" class="c-btn c-btn--dark" data-option="intellectual">知性</button>
+        <button type="button" class="c-btn c-btn--dark" data-option="girl">少女</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="result" data-result="intellectual">
+    <div class="result__title">恭喜你獲得</div>
+    <img src="./images/book.png" alt="">
+    <div>
+      <div class="result__subtitle">梁靜茹的勇氣</div>
+      <div class="result__text">探索惡魔老闆的世界</div>
+    </div>
+  </div>
+
+  <div class="result" data-result="girl">
+    <div class="result__title">恭喜你獲得</div>
+    <img src="./images/cake.png" alt="">
+    <div>
+      <div class="result__subtitle">戀愛的滋味</div>
+      <div class="result__text">甜到你心裡</div>
+    </div>
+  </div>
+
+  <script>
+    const giftBtn = document.querySelector('.gift__btn');
+    const optionBtns = document.querySelectorAll('[data-option]');
+
+    giftBtn.addEventListener('click', (e) => {
+      const modal = document.querySelector('.modal');
+      modal.classList.add('is-active');
+    });
+
+    optionBtns.forEach((btn) => {
+
+      btn.addEventListener('click', (e) => {
+        const option = btn.dataset.option;
+        const result = document.querySelector(`[data-result="${option}"]`);
+        result.classList.add('is-active');
+      });
+    })
+  </script>
+</body>
+</html>
