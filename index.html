@@ -75,19 +75,29 @@
     }
 
     .wrap__content__gift {
+      max-width: 250px;
       width: 100%;
-      display: flex;
-      justify-content: center;
-      transform: translateX(-4%);
     }
 
-    .wrap__content__gift > * {
+    .gift__img img {
+      width: 100%;
+      height: 100%;
       object-fit: contain;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .wrap__content__gift:hover .gift__img--top {
+      transform: translateY(16px);
+      transition: all ease 600ms;
     }
 
     .gift__img {
-      width: 50%;
-      height: auto;
+      position: relative;
+      width: 100%;
+      padding-top: calc(100% / 250 * 331);
+      overflow: hidden;
     }
 
     .c-btn {
@@ -214,6 +224,7 @@
     }
 
     .result img {
+      max-width: 500px;
       width: 50%;
       object-fit: contain;
     }
@@ -224,8 +235,6 @@
       color: #42B4A5;
       font-weight: 600;
       letter-spacing: 2.2px;
-      /* border-bottom: 1px solid #42b4a580; */
-      /* border-top: 1px solid #42b4a580; */
       margin-bottom: 8px;
     }
 
@@ -251,14 +260,58 @@
       letter-spacing: 1.2px;
       color: #5e5e5e;
     }
+
+    .l-loading {
+      width: 100%;
+      height: 100%;
+      background-color: #fff7d2;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 9999;
+      transition: all ease 2500ms;
+    }
+
+    .l-loading.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      transition: all ease 800ms;
+    }
+
+    [data-fade="in"] {
+      opacity: 0;
+      transition: all ease 1500ms;
+    }
+
+    [data-fade="in"].is-active {
+      opacity: 1;
+      transition: all ease 1500ms;
+    }
+
+    [data-fade="up"] {
+      transform: translateY(20px);
+      transition: all ease-out 1000ms;
+    }
+
+    [data-fade="up"].is-active {
+      transform: translateY(0);
+      transition: all ease-out 1000ms;
+    }
   </style>
 </head>
 <body>
+  <div class="l-loading"></div>
+
   <div class="wrap">
     <div class="wrap__content">
       <h1 class="wrap__content__title">HAPPY<br>BIRTHDAY</h1>
       <div class="wrap__content__gift">
-        <img class="gift__img" src="./images/gift.png" alt="">
+        <div class="gift__img">
+          <img class="gift__img--top" src="./images/gift-top.png" alt="" data-fade="up">
+          <img src="./images/gift-bottom.png" alt="">
+        </div>
       </div>
       <button typpe="button" class="gift__btn c-btn c-btn--main">click me</button>
     </div>
@@ -309,6 +362,20 @@
         result.classList.add('is-active');
       });
     })
+    
+    window.addEventListener('load', () => {
+      loaded();
+    });
+
+    function loaded() {
+      const loading = document.querySelector('.l-loading');
+      const fadeEls = document.querySelectorAll('[data-fade]');
+
+      loading.classList.add('is-hidden');
+      fadeEls.forEach((el) => {
+        el.classList.add('is-active');
+      })
+    }
   </script>
 </body>
 </html>
